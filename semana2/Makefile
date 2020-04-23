@@ -29,3 +29,12 @@ enviarSinClases: enviarSinClases.c
 recibirSinClases: recibirSinClases.c
 	gcc -g recibirSinClases.c -o recibirSinClases
 
+pruebaShM: pruebaShM.o Semaphore.o
+	g++ -g pruebaShM.o Semaphore.o -o pruebaShM
+
+pruebaShM.o: pruebaShM.cc
+	g++ -c -g pruebaShM.cc
+
+Semaphore.o: Semaphore.cpp Semaphore.h
+	g++ -c -g Semaphore.cpp -pthread
+
