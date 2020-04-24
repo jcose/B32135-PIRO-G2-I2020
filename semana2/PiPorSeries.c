@@ -14,6 +14,8 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/shm.h>
+#include <errno.h>
+
 
 /*
    Realiza la acumulacion de terminos desde una posicion inicial hasta un termino final
@@ -39,6 +41,7 @@ int main( int argc, char ** argv ) {
     long terminos, inicio, fin;
     int proceso;
     int pid;
+    int id;
     //double casiPi = 0;
 
     terminos = 1000000;
@@ -46,8 +49,19 @@ int main( int argc, char ** argv ) {
         terminos = atol( argv[ 1 ] );
     }
 
-    int id = shmget( 32135, sizeof(double), 0700 | IPC_CREAT );
+    id = shmget( 32135, sizeof(double), 0700 | IPC_CREAT );
+
+    if(id < 0){
+        perror("shmget");
+                exit(1);
+    }
+
     double *suma = (double*) shmat( id, NULL, 0 );//area de memoria compartida
+
+    if(*suma < 0){
+        perror("shmat");
+                exit(1);
+    }
 
     for ( proceso = 0; proceso < 10; proceso++ ) {
         inicio = proceso * terminos/10;
@@ -63,6 +77,11 @@ int main( int argc, char ** argv ) {
     for ( proceso = 0; proceso < 10; proceso++ ) {
         int status;
         pid_t pid = wait( &status );
+
+        if(pid < 0){
+            perror("wait");
+                    exit(1);
+        }
     }
 
     /*for ( proceso = 1; proceso < 10; proceso++ ) {
