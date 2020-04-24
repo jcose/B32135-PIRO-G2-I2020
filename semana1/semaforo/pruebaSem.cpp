@@ -22,6 +22,7 @@ int main() {
             printf( "Esperando que el semaforo se active  ...\n" );
             s.Wait();
             printf( "Semaforo activado.\n" );
+            exit(0);
         }
     }
     else {  // fork error message

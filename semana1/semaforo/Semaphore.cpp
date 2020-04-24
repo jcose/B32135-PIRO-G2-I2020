@@ -14,12 +14,9 @@ Semaphore::Semaphore(int ValorIn){
 }
 
 Semaphore::~Semaphore(){
-    if((semctl(id, 0, GETNCNT)) > 1) //GETNCNT return the number of processes waiting for the value of this semaphore
+    if((semctl(id, 0, IPC_RMID)) < 0)//Removes the semaphores
     {
-        if((semctl(id, 0, IPC_RMID)) < 0)//Removes the semaphores
-        {
-            perror("semctl");
-        }
+        perror("semctl");
     }
 }
 
