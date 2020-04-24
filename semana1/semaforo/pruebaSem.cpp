@@ -5,7 +5,7 @@
 #include "Semaphore.h"
 
 int main() {
-    Semaphore s;
+    Semaphore s(1);
     //char * texto = NULL;
     int i;
     pid_t pid;  // process id is used to check if process was correctly created
