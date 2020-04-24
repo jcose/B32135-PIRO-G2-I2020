@@ -38,3 +38,6 @@ pruebaShM.o: pruebaShM.cc
 Semaphore.o: Semaphore.cpp Semaphore.h
 	g++ -c -g Semaphore.cpp -pthread
 
+PiPorSeries: PiPorseries.c
+	gcc -Wall PiPorSeries.c -o PiPorSeries -pedantic
+

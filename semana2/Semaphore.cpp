@@ -4,7 +4,7 @@
 #include <errno.h>
 
 Semaphore::Semaphore(int ValorIn){
-    id = semget(KEY, 1, 0666 | IPC_CREAT);
+    id = semget(KEY, ValorIn, 0666 | IPC_CREAT);
     if(id < 0)
     {
         errno = 0;
