@@ -16,18 +16,18 @@ Buzon.o: Buzon.h Buzon.cc
 
 # Enlazar los archivos objeto y genera el archivo ejecutable
 recibirConClases: recibirConClases.o Buzon.o
-	g++ -g recibirConClases.o Buzon.o -a recibirConClases
+	g++ -g recibirConClases.o Buzon.o -o recibirConClases
 
 # Genera el archivo objeto a partir del fuente de recibirConClases
-recibirConClase.o: recibirConClases.cc Buzon.h
+recibirConClases.o: recibirConClases.cc Buzon.h
 	g++ -g -c recibirConClases.cc
 
 # Compila la version sin clases
 enviarSinClases: enviarSinClases.c
-	gcc -g enviarSinClases.c -o enviarSinClases
+	gcc -Wall -g enviarSinClases.c -o enviarSinClases
 
 recibirSinClases: recibirSinClases.c
-	gcc -g recibirSinClases.c -o recibirSinClases
+	gcc -Wall -g recibirSinClases.c -o recibirSinClases
 
 pruebaShM: pruebaShM.o Semaphore.o
 	g++ -g pruebaShM.o Semaphore.o -o pruebaShM
@@ -40,4 +40,7 @@ Semaphore.o: Semaphore.cpp Semaphore.h
 
 PiPorSeries: PiPorseries.c
 	gcc -Wall PiPorSeries.c -o PiPorSeries -pedantic
+
+clean:
+	rm -f *.o
 

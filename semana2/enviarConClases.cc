@@ -15,7 +15,8 @@ const char * html_labels[] = {
 };
 
 int main( int argc, char ** argv ) {
-   int id, i, size, st;
+   int i,  st;
+   //int size, id;
    Buzon m;
 
    i = 0;

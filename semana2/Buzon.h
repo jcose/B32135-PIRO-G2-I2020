@@ -15,7 +15,7 @@
  *  };
  */
 
-#define KEY 0xA12345	// Valor de la llave del recurso
+#define KEY 0xB32135	// Valor de la llave del recurso
 
 class Buzon {
    public:
@@ -28,5 +28,10 @@ class Buzon {
 
    private:
       int id;		// Identificador del buzon
+      struct msgbuf {
+         long mtype;
+         int veces;
+         char etiqueta[ 32 ];
+      } my_message;
 };
 

@@ -24,18 +24,24 @@ int main( int argc, char ** argv ) {
       char etiqueta[ 32 ];
    } mensaje;
 
-   id = msgget( 0xA12345, IPC_CREAT | 0600 );
+   id = msgget( 0xB32135, IPC_CREAT | 0600 );
    if ( -1 == id ) {
       perror( "Enviar sin clases" );
       exit( 1 );
    }
 
    i = 0;
+   int idx = -1;
    while ( ( size = strlen( html_labels[ i ] ) ) > 0 ) {
       mensaje.mtype = 2020;
       mensaje.veces = i;
       strncpy( mensaje.etiqueta, html_labels[ i ], size );
-      st = msgsnd( id, (const void *) & mensaje, sizeof( mensaje ), IPC_NOWAIT ); 
+      idx = strlen(html_labels[ i ]);
+      if(idx > 0){
+          mensaje.etiqueta[idx] = '\0';
+            idx = -1;
+      }
+      st = msgsnd( id, (const void *) & mensaje, sizeof( mensaje ), IPC_NOWAIT );
       printf( "Label: %s, status %d \n", html_labels[ i ], st );
       i++;
    }
