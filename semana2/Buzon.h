@@ -33,5 +33,7 @@ class Buzon {
          int veces;
          char etiqueta[ 32 ];
       } my_message;
+
+
 };
 

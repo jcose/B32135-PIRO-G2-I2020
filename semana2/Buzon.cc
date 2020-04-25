@@ -7,7 +7,6 @@
 #include <string.h>
 
 
-
 Buzon::Buzon() {
     id = msgget( 0xB32135, IPC_CREAT | 0600 );
     if ( -1 == id ) {
@@ -17,8 +16,8 @@ Buzon::Buzon() {
 }
 
 Buzon::~Buzon() {
-    msgctl( id, IPC_RMID, NULL );
-    printf( "destruyendo bozon %d\n", id );
+    //msgctl( id, IPC_RMID, NULL );
+    //printf( "destruyendo bozon %d\n", id );
 }
 
 int Buzon::Enviar( const char * mensaje, int veces, long tipo ) {// Envia la tira de caracteres como un mensaje tipo
@@ -27,8 +26,8 @@ int Buzon::Enviar( const char * mensaje, int veces, long tipo ) {// Envia la tir
     if ( ( size = strlen( mensaje ) ) > 0 ) {
         my_message.mtype = tipo;
         my_message.veces = veces;
-        strncpy( my_message.etiqueta, mensaje, size );
-        return msgsnd( id, (const void *) & my_message, sizeof( my_message ), IPC_NOWAIT );
+        strcpy( my_message.etiqueta, mensaje );
+        st= msgsnd( id, (const void *) & my_message, sizeof( my_message ), IPC_NOWAIT );
     }
     return st;
 }
@@ -38,8 +37,8 @@ int Buzon::Enviar( void * mensaje, int len, int veces, long tipo ) {
     if ( len > 0 ) {
         my_message.mtype = tipo;
         my_message.veces = veces;
-        strncpy( my_message.etiqueta, (const char*)mensaje, len );
-        return msgsnd( id, (const void *) & my_message, sizeof( my_message ), IPC_NOWAIT );
+        strcpy( my_message.etiqueta, (const char*)mensaje);
+        st= msgsnd( id, (const void *) & my_message, sizeof( my_message ), IPC_NOWAIT );
     }
     return st;
 }
@@ -52,18 +51,16 @@ int Buzon::Recibir( char * mensaje, int * veces, long tipo ) {// len es el tamaÃ
     } temp_message;
 
     int st;
-    if ((st = msgrcv( id, (void *) & temp_message, sizeof( temp_message ), tipo, 0 ) ) > 0 ) {
-        //strncpy(mensaje, temp_message.etiqueta, strlen(temp_message.etiqueta));
-        strcpy(mensaje, temp_message.etiqueta);
+    
+    if((st = msgrcv(id,(void *)&temp_message,sizeof( temp_message ),tipo,IPC_NOWAIT))>0){
+    	strcpy(mensaje, temp_message.etiqueta);
     }
-    //printf("mensaje: [%s] tamano: %lu size: %lu\n", mensaje, strlen(mensaje), sizeof (mensaje));
-    //printf("temp_msg: [%s] tamano: %lu size: %lu\n", temp_message.etiqueta, strlen(temp_message.etiqueta), sizeof (temp_message));
-    printf("st: %d\n",st);
     return st;
 
 }
 
-int Buzon::Recibir( void * mensaje, int len, long tipo ) {// mensaje puede ser de tipo msgbuf
+/*int Buzon::Recibir( void * mensaje, int len, long tipo ) {// mensaje puede ser de tipo msgbuf
+    printf( "recibir segundo\n");
 
     return 0;
-}
+}*/
