@@ -13,3 +13,5 @@ ipv6-test: ipv6-test.o Socket.o
 ipv6-test.o: ipv6-test.cc Socket.h
 	g++ -g -c ipv6-test.cc
 
+server:
+	gcc server.c -o server
