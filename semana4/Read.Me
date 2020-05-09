@@ -1,0 +1,44 @@
+Read.Me Semana 4
+
+Objetivos
+
+   Completar la clase para intercambio de mensajes entre computadoras que no comparten memoria
+   Agregar la funcionalidad del servidor
+
+Introducción
+
+   Se ha implementado un servidor capaz de atender cada solicitud por medio de un proceso separado (fork)
+
+Funcionamiento
+
+   Se implementaron los métodos de la clase "Socket" para lograr que un proceso servidor
+   pueda atender solicitudes de los clientes. La comunicación se logró usando un protocolo muy sencillo, 
+paso de mensajes por medio de sistemas Linux.
+
+
+
+Tareas
+
+   - Se completó la clase "Socket" para poder intercambiar mensajes entre procesos que no comparten memoria.
+     Métodos implementados:
+        Socket( int ), otro constructor que recibe un entero como parámetro
+        Listen( int ), marca el socket como pasivo, es decir que va a recibir conexiones por medio de Accept (listen),
+           el parámetro establece el tamaño de la cola (backlog)
+        Bind( int ), para relacionar este socket con el proceso (bind), el parámetro determina el # de puerto a utilizar
+        Socket * Accept, para establecer conexiones con este servidor (accept)
+        Shutdown( int ), cierra parcialmente el Socket de acuerdo con el parámetro
+
+   - Los ejemplos "MirrorServerTest.cc" y "MirrorClientTest.cc" funcionan de la siguiente manera:
+
+	Primero ponemos el servidor a esperar por clientes
+
+	$ make MirrorServerTest
+	$ ./MirrorServerTest
+
+	Luego, corremos el programa cliente
+
+	$ make MirrorClientTest
+	$ ./MirrorClientTest 'algún mensaje'
+
+   El servidor contesta exactamente el mismo mensaje que envió el cliente. 
+
